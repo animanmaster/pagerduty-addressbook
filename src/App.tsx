@@ -11,28 +11,31 @@ const DEFAULT_API_TOKEN = 'y_NbAkKc66ryYTWUXYEu';
 
 function App() {
   const [apiToken, setApiToken] = useState(DEFAULT_API_TOKEN);
-  const [total, setTotal] = useState(0);
-  const [nextOffset, setNextOffset] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [total, setTotal] = useState(0);
   const [users, setUsers] = useState<User[]>([]);
   const [done, setDone] = useState(false);
 
-  const limit = 25;
-
+  // create an api client when apiToken is set
   const apiClient = useMemo(() => apiToken ? new UsersApi(apiToken) : null, [apiToken]);
 
-  useEffect(() => {
+  const limit = 25; // might be nice to make this configurable
+  const loadButtonText = loading ? 'Loading...' : (done ? 'No more users to load' : 'Load more users');
+  const loadButtonTitle = !apiClient ? 'Set a valid API token first!' : 'Load more users';
+
+  const fetchUsers = (offset = 0, appendUsers = false) => {
     if (!apiClient) return;
 
-    const shouldGetTotal = nextOffset === 0;
+    // only request total on the first page since docs say it's expensive.
+    const shouldGetTotal = offset === 0;
+
     setLoading(true);
-    // only request total on the first request since docs say it's expensive.
-    apiClient.listUsers({ offset: nextOffset, total: shouldGetTotal, "include[]": ['contact_methods'] })
+    apiClient.listUsers({ offset, limit, total: shouldGetTotal, "include[]": ['contact_methods'] })
       .then(data => {
         if (shouldGetTotal) {
           setTotal(data.total);
         }
-        setUsers([...users, ...data.users]);
+        setUsers(appendUsers ? [...users, ...data.users] : data.users);
         setDone(!data.more);
       })
       .catch(err => {
@@ -41,7 +44,12 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  }, [apiClient, nextOffset]);
+  };
+
+  // initial fetch once apiClient is defined (or changed)
+  useEffect(() => {
+    fetchUsers();
+  }, [apiClient]);
 
   return (
     <>
@@ -61,12 +69,18 @@ function App() {
 
       <h1>Users {total > 0 && `(${total})`}</h1>
 
-      { users.map(user => <UserRow key={user.id} user={user} />) }
-      
+      <div className="user-list">
+        { users.map(user => <UserRow key={user.id} user={user} />) }
+      </div>
+
       <hr />
 
-      <button onClick={() => setNextOffset(nextOffset + limit)} disabled={loading || !apiClient || done} title={!apiClient ? 'Set a valid API token first!' : 'Load more users'} >
-        {loading ? 'Loading...' : (done ? 'No more users to load' : 'Load more users')}
+      <button
+        onClick={() => fetchUsers(users.length, true)}
+        disabled={loading || !apiClient || done}
+        title={loadButtonTitle}
+      >
+        {loadButtonText}
       </button>
     </>
   )
