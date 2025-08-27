@@ -69,3 +69,15 @@
   font-family: monospace;
   color: #666;
 }
+
+.user .contact-methods-title {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.expander {
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  border-top: white 1px solid;
+}

@@ -6,17 +6,18 @@ import type { User } from './api/types';
 import UserRow from './components/UserRow';
 import UsersApi from './api/users';
 
-// it's in the docs, so including here, but normally shouldn't do this :P
+// it's in the public docs, so including here, but normally we shouldn't bake api tokens into the code. :P
 const DEFAULT_API_TOKEN = 'y_NbAkKc66ryYTWUXYEu';
 
 function App() {
   const [apiToken, setApiToken] = useState(DEFAULT_API_TOKEN);
-  const [limit, setLimit] = useState(25);
   const [total, setTotal] = useState(0);
   const [nextOffset, setNextOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
   const [done, setDone] = useState(false);
+
+  const limit = 25;
 
   const apiClient = useMemo(() => apiToken ? new UsersApi(apiToken) : null, [apiToken]);
 
@@ -53,13 +54,14 @@ function App() {
           onChange={(e) => setApiToken(e.target.value)}
           placeholder="Enter PagerDuty API token"
         />
+
       </div>
 
       <hr />
 
       <h1>Users {total > 0 && `(${total})`}</h1>
 
-      { users.map(user => <UserRow key={user.id} apiClient={apiClient} user={user} />) }
+      { users.map(user => <UserRow key={user.id} user={user} />) }
       
       <hr />
 

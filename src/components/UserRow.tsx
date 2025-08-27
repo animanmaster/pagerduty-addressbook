@@ -15,8 +15,11 @@ const ContactMethodEmojis: Record<string, string> = {
     'push': '🔔',
 };
 
-export default ({ apiClient, user, detailed }: UserProps) => {
+export default ({ user, detailed }: UserProps) => {
     const [expanded, setExpanded] = useState(!!detailed);
+
+    // Some colors come back as dark-slate-blue, so convert that to something that works as a css class.
+    const color = user.color.toString().replaceAll('-', '');
 
     return (
         <div className="user" onClick={() => setExpanded(!expanded)}>
@@ -27,10 +30,13 @@ export default ({ apiClient, user, detailed }: UserProps) => {
                 <h2 className="user-name">{user.name}</h2>
                 <h4 className="user-id">{user.id}</h4>
             </div>
-            <hr style={{ backgroundColor: user.color.toString().replaceAll('-', ''), height: '1em' }} title={user.color} />
+
+            <hr style={{ backgroundColor: color, height: '1em' }} title={user.color} />
+
             <div className="key-info">
                 <p className="email"><a href={`mailto:${user.email}`}>{user.email}</a></p>
             </div>
+
             {
                 expanded && (
                     <div className="additional-details">
@@ -40,7 +46,7 @@ export default ({ apiClient, user, detailed }: UserProps) => {
                         <p><strong>Description:</strong> {user.description || 'N/A'}</p>
                         <p><strong>Teams:</strong> {user.teams.length > 0 ? user.teams.map(team => team.summary).join(', ') : 'None'}</p>
                         <div className="contact-methods">
-                            <strong>Contact Methods:</strong>
+                            <strong className="contact-methods-title">Contact Methods:</strong>
                             {
                                 user.contact_methods.map(method => {
                                     const methodName = method.type.replace(/_contact_method.*$/, '');
@@ -54,7 +60,7 @@ export default ({ apiClient, user, detailed }: UserProps) => {
                     </div>
                 )
             }
-            <div>{expanded ? '-' : '+'}</div>
+            <div className="expander">{expanded ? '-' : '+'}</div>
         </div>
     );
 }
