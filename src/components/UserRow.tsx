@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { User, ContactMethod } from "../api/types";
 import type UsersApi from "../api/users";
 
+import './UserRow.css';
+
 interface UserProps {
     user: User;
     apiClient?: UsersApi | null;

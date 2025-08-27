@@ -1,0 +1,40 @@
+.user {
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 200ms;
+}
+
+.user .user-avatar {
+  text-align: center;
+}
+
+.user .header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.user .user-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.user .user-id {
+  font-family: monospace;
+  color: #666;
+}
+
+.user .contact-methods-title {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.expander {
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  border-top: white 1px solid;
+}
