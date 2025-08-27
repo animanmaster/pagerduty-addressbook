@@ -66,6 +66,12 @@ function App() {
       })
       .catch(err => {
         console.error('Error fetching user:', err);
+        if (err?.status === 404) {
+          // Handle not found error a little differently
+          setUsers([]);
+          setTotal(0);
+          setDone(true);
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -93,7 +99,7 @@ function App() {
 
       <hr />
 
-      <h1>Users {total > 0 && `(${total})`}</h1>
+      <h1>Users {`(${total || 0})`}</h1>
 
       <UserSearch
         fetchUser={fetchUser}
@@ -103,6 +109,8 @@ function App() {
           }
         }
       />
+
+      { loading && 'Loading...' }
 
       <div className="user-list">
         { users.map(user => <UserRow key={user.id} user={user} detailed={expanded} />) }

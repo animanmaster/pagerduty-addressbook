@@ -29,7 +29,7 @@ export default ({ fetchUsers, fetchUser }: UserSearchProps) => {
             <select className="filter-options" value={searchBy} onChange={e => setSearchBy(e.target.value as SearchByOption)}>
                 {searchOptions.map(option => <option key={option} value={option}>{option}</option>)}
             </select>
-            =
+            { searchBy === 'id' ? 'equals' : 'contains' }
             <input type="text" value={searchByValue} onChange={e => setSearchByValue(e.target.value)} />
             <button className="search-submit" onClick={search}>
                 Search
