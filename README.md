@@ -1,69 +1,34 @@
-# React + TypeScript + Vite
+# Pagerduty Addressbook using Typescript and React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project implements a client-side web app that can leverage the [Pagerduty API](https://developer.pagerduty.com/api-reference/c96e889522dd6-list-users) to find and display Users. This is not a complete application, but is a functional example that leverages the API and could be used with any valid Pagerduty API token.
 
-Currently, two official plugins are available:
+## Features
+- List all users associated with the account related to the provided API token
+- Search users by name or id
+- View user details including name, email, avatar, role, contact info, etc.
+- Somewhat mobile friendly. :)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Usage
 
-## Expanding the ESLint configuration
+Changes to the `main` branch of this repository are configured to automatically deploy to GitHub Pages. You can access the deployed app at: [https://animanmaster.github.io/pagerduty-addressbook](https://animanmaster.github.io/pagerduty-addressbook).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+To run the application locally, follow these steps:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+0. Make sure you have [Node.js](https://nodejs.org/) installed on your machine. This project was built using Node.js v22.17.0.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/animanmaster/pagerduty-addressbook.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd pagerduty-addressbook
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+5. Navigate to the URL in your browser to view the application. Any changes made to the source code will automatically reload the app.
