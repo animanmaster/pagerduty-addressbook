@@ -1,3 +1,17 @@
+const retriableStatusCodes = new Set([429, 500, 502, 503, 504]);
+
+export class ApiError extends Error {
+    status: number;
+    retriable: boolean; // whether or not this error is transient and retrying the request is reasonable.
+
+    constructor(message: string, status: number) {
+        super(message);
+        this.name = 'ApiError';
+        this.status = status;
+        this.retriable = retriableStatusCodes.has(status);
+    }
+}
+
 export default class ApiClient {
     private baseUrl: string;
     private apiKey: string;
@@ -29,7 +43,9 @@ export default class ApiClient {
         });
 
         if (!response.ok) {
-            throw new Error(`${response.status} error fetching ${endpoint}: ${response.statusText} body: ${await response.text()}`);
+            const body = await response.text();
+            console.error(`${response.status} error fetching ${endpoint}: ${response.statusText} body: ${body}`);
+            throw new ApiError(body, response.status);
         }
 
         return await response.json() as T;

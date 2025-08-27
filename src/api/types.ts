@@ -61,5 +61,10 @@ export type ValidUsersResponse = {
     users: Array<User>;
 };
 
+export type ValidUserResponse = {
+    user: User;
+};
+
 // The union of a valid response and an error response, the users API will return one or the other.
 export type UsersResponse = ErrorResponse | ValidUsersResponse;
+export type UserResponse = ErrorResponse | ValidUserResponse;

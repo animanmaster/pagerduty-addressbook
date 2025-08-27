@@ -1,7 +1,7 @@
 import ApiClient from "./client";
-import type { ValidUsersResponse } from "./types";
+import type { ValidUsersResponse, ValidUserResponse } from "./types";
 
-type AdditionalModels = 'teams' | 'contact_methods' | 'notification_rules' | 'subdomains';
+export type AdditionalModels = 'teams' | 'contact_methods' | 'notification_rules' | 'subdomains';
 
 export type UsersListQueryParams = {
     limit?: number;
@@ -15,5 +15,9 @@ export type UsersListQueryParams = {
 export default class UsersApi extends ApiClient {
     async listUsers(params: UsersListQueryParams): Promise<ValidUsersResponse> {
         return this.get<ValidUsersResponse>('/users', params);
+    }
+
+    async getUser(id: string, include?: Array<AdditionalModels>): Promise<ValidUserResponse> {
+        return this.get<ValidUserResponse>(`/users/${id}`, { 'include[]': include });
     }
 }
