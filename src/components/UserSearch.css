@@ -1,0 +1,14 @@
+.search-form {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+}
+
+.search-form input, .search-form select {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #ccc;
+    padding: 4px 8px;
+    margin: 0 4px;
+}

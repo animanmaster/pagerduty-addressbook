@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import './UserSearch.css';
+
 const searchOptions = ['name', 'id'] as const;
 type SearchByOption = typeof searchOptions[number];
 
@@ -22,9 +24,9 @@ export default ({ fetchUsers, fetchUser }: UserSearchProps) => {
     };
 
     return (
-        <div>
+        <form className="search-form" onSubmit={e => { e.preventDefault(); search(); }}>
             Filter:
-            <select id="search" value={searchBy} onChange={e => setSearchBy(e.target.value as SearchByOption)}>
+            <select className="filter-options" value={searchBy} onChange={e => setSearchBy(e.target.value as SearchByOption)}>
                 {searchOptions.map(option => <option key={option} value={option}>{option}</option>)}
             </select>
             =
@@ -32,6 +34,6 @@ export default ({ fetchUsers, fetchUser }: UserSearchProps) => {
             <button className="search-submit" onClick={search}>
                 Search
             </button>
-        </div>
+        </form>
     );
 }

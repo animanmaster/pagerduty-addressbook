@@ -29,7 +29,7 @@ function App() {
   const loadButtonText = loading ? 'Loading...' : (done ? 'No more users to load' : 'Load more users');
   const loadButtonTitle = !apiClient ? 'Set a valid API token first!' : 'Load more users';
 
-  const fetchUsers = ({ query, offset, appendUsers }: FetchUserParams = { offset: 0, appendUsers: false }) => {
+  const fetchUsers = ({ query, offset, appendUsers }: FetchUserParams = { query: '', offset: 0, appendUsers: false }) => {
     if (!apiClient) return;
 
     // only request total on the first page since docs say it's expensive.
