@@ -20,4 +20,8 @@ export default class UsersApi extends ApiClient {
     async getUser(id: string, include?: Array<AdditionalModels>): Promise<ValidUserResponse> {
         return this.get<ValidUserResponse>(`/users/${id}`, { 'include[]': include });
     }
+
+    async getUserContactMethods(userId: string): Promise<ValidUserResponse> {
+        return this.get<ValidUserResponse>(`/users/${userId}/contact_methods`);
+    }
 }

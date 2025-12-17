@@ -8,15 +8,17 @@ type SearchByOption = typeof searchOptions[number];
 type UserSearchProps = {
     fetchUser: (id: string) => void;
     fetchUsers: (query: string) => void;
+    fetchUserContactMethods: (userId: string) => void;
 }
 
-export default ({ fetchUsers, fetchUser }: UserSearchProps) => {
+export default ({ fetchUsers, fetchUser, fetchUserContactMethods }: UserSearchProps) => {
     const [searchBy, setSearchBy] = useState<SearchByOption>('name');
     const [searchByValue, setSearchByValue] = useState<string>('');
 
     const search = () => {
         if (searchBy === 'id') {
             fetchUser(searchByValue);
+            fetchUserContactMethods(searchByValue);
         }
         else if (searchBy === 'name') {
             fetchUsers(searchByValue);

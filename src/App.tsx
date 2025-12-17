@@ -78,6 +78,22 @@ function App() {
       });
   };
 
+  const fetchUserContactMethods = (userId: string) => {
+    if (!apiClient) return;
+
+    setLoading(true);
+    apiClient.getUserContactMethods(userId)
+      .then(({ contact_methods }) => {
+        console.log('Contact methods for user:', contact_methods);
+      })
+      .catch(err => {
+        console.error('Error fetching user contact methods:', err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
   // initial fetch once apiClient is defined (or changed)
   useEffect(() => {
     fetchUsers();
@@ -108,6 +124,7 @@ function App() {
             fetchUsers({ query, offset: 0, appendUsers: false });
           }
         }
+        fetchUserContactMethods={fetchUserContactMethods}
       />
 
       { loading && 'Loading...' }
